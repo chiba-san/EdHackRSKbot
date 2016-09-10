@@ -68,7 +68,7 @@ namespace DataBaseContext.Migrations
                         OwnerId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                //.ForeignKey("dbo.Users", t => t.OwnerId, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.OwnerId, cascadeDelete: false)
                 .Index(t => t.OwnerId);
             
             CreateTable(

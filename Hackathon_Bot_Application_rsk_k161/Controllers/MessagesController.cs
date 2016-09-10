@@ -22,12 +22,31 @@ namespace Hackathon_Bot_Application_rsk_k161
             if (activity.Type == ActivityTypes.Message)
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-                // calculate something for us to return
-                int length = (activity.Text ?? string.Empty).Length;
 
-                // return our reply to the user
-                Activity reply = activity.CreateReply($"You sent {activity.Text} which was {length} characters");
-                await connector.Conversations.ReplyToActivityAsync(reply);
+                //tivity.From.Name
+                using (DataBaseContext.Context db = new DataBaseContext.Context())
+                {
+                    var userName = activity.From.Name;
+                    Activity reply = null;
+                    try
+                    {
+                        var result = db.Users.Any(t => t.Telegram.Equals(userName) || t.Facebook.Equals(userName));
+                        if (result)
+                        {
+                            reply = activity.CreateReply($"I've found you  {userName}");
+                        }
+                        else
+                        {
+                            reply = activity.CreateReply($"I don't know yu, pal!");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        reply = activity.CreateReply($"{ex.Message}");
+                    }
+                    await connector.Conversations.ReplyToActivityAsync(reply);
+                }
+                
             }
             else
             {

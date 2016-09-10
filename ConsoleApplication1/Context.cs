@@ -10,11 +10,6 @@ namespace DataBaseContext
 {
     public class Context:DbContext
     {
-        public Context()
-             : base("Name=DefaultConnection")
-        {
-
-        }
         public DbSet<Quiz> Quizzes { get; set; }
 
         public DbSet<Question> Questions { get; set; }
