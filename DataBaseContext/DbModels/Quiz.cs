@@ -32,11 +32,6 @@ namespace DataBaseContext.DbModels
         /// </summary>
         [Timestamp]
         public Byte[] Timestamp { get; set; }
-
-        public int OwnerId { get; set; }
-
-        public virtual User Owner{get; set;}
-
         
         public virtual ICollection<Question> Questions { get; set; }
     }
